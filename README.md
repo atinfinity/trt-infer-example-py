@@ -32,7 +32,7 @@ pip install cuda-python==12.2.0
 Please build engine by TensorRT.
 
 ```shell
-trtexec --verbose --profilingVerbosity=detailed --buildOnly --memPoolSize=workspace:8192MiB --onnx=model/model_bn.onnx --saveEngine=model/model_bn.onnx.engine --allowGPUFallback > model_bn.onnx.engine.build.log
+trtexec --verbose --profilingVerbosity=detailed --buildOnly --memPoolSize=workspace:8192MiB --onnx=model/model_bn.onnx --saveEngine=model/model_bn.onnx.engine > model_bn.onnx.engine.build.log
 ```
 
 If you use DLA(Deep Learning Accelerator), please add `--useDLACore` option.
