@@ -67,7 +67,6 @@ with open(trt_engine_file, 'rb') as f:
 
 ```python
 context = engine.create_execution_context()
-context.set_input_shape("input", engine.get_tensor_shape("input"))
 ```
 
 ### inference

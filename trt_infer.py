@@ -13,7 +13,6 @@ with open(trt_engine_file, 'rb') as f:
 
 # create context
 context = engine.create_execution_context()
-context.set_input_shape("input", engine.get_tensor_shape("input"))
 
 # generate input
 np.random.seed(0)
