@@ -28,12 +28,14 @@ _, d_output_npa_ptr = cudart.cudaMallocAsync(output_npa.nbytes, stream)
 cudart.cudaMemcpyAsync(d_input_npa_ptr, input_npa.data, input_npa.nbytes, cudart.cudaMemcpyKind.cudaMemcpyHostToDevice, stream)
 
 # inference
-bindings = [d_input_npa_ptr, d_output_npa_ptr]
-context.execute_async_v2(bindings, stream)
+context.set_tensor_address("input", d_input_npa_ptr)
+context.set_tensor_address("output", d_output_npa_ptr)
+context.execute_async_v3(stream)
+
+cudart.cudaStreamSynchronize(stream)
 
 # copy DtoH
 cudart.cudaMemcpyAsync(output_npa.data, d_output_npa_ptr, output_npa.nbytes, cudart.cudaMemcpyKind.cudaMemcpyDeviceToHost, stream)
-cudart.cudaStreamSynchronize(stream)
 
 print(output_npa)
 
