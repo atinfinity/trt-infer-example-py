@@ -72,8 +72,9 @@ context = engine.create_execution_context()
 ### inference
 
 ```python
-bindings = [d_input_npa_ptr, d_output_npa_ptr]
-context.execute_async_v2(bindings, stream)
+context.set_tensor_address("input", d_input_npa_ptr)
+context.set_tensor_address("output", d_output_npa_ptr)
+context.execute_async_v3(stream)
 ```
 
 ## Result
@@ -81,7 +82,7 @@ context.execute_async_v2(bindings, stream)
 ### ONNX Runtime(CPUExecutionProvider)
 
 ```shell
-$ python3 ort_infer.py 
+$ python3 ort_infer.py
 [[-0.00903677 -0.01994101 -0.00086907  0.00596721  0.01973673  0.00928676
   -0.03634664  0.02087523  0.02591487  0.00518102]]
 ```
@@ -89,7 +90,7 @@ $ python3 ort_infer.py
 ### TensorRT(without DLA)
 
 ```shell
-$ python3 trt_infer.py 
+$ python3 trt_infer.py
 [08/28/2023-14:46:48] [TRT] [I] Loaded engine size: 6 MiB
 [08/28/2023-14:46:49] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in engine deserialization: CPU +0, GPU +5, now: CPU 0, GPU 5 (MiB)
 [08/28/2023-14:46:49] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +1, now: CPU 0, GPU 6 (MiB)
@@ -100,7 +101,7 @@ $ python3 trt_infer.py
 ### TensorRT(with DLA)
 
 ```shell
-$ python3 trt_infer.py 
+$ python3 trt_infer.py
 [08/28/2023-14:49:32] [TRT] [I] Loaded engine size: 3 MiB
 [08/28/2023-14:49:32] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in engine deserialization: CPU +3, GPU +0, now: CPU 3, GPU 0 (MiB)
 [08/28/2023-14:49:32] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +0, now: CPU 3, GPU 0 (MiB)
@@ -115,3 +116,5 @@ $ python3 trt_infer.py
 - <https://nvidia.github.io/cuda-python/index.html>
 - <https://github.com/NVIDIA-AI-IOT/jetson_dla_tutorial>
 - <https://github.com/PaddlePaddle/PaddleDetection/blob/release/2.6/deploy/end2end_ppyoloe/cupy-python.py>
+- <https://github.com/NVIDIA-AI-IOT/NVIDIA-Optical-Character-Detection-and-Recognition-Solution/blob/main/src/TRTEngine.cpp>
+- <https://github.com/cyrusbehr/tensorrt-cpp-api>
